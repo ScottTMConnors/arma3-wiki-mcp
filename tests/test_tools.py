@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from arma3_wiki_mcp import server
+from arma3_wiki_mcp import __version__, server
 
 
 def test_field_reads_inline_and_block_values():
@@ -80,7 +80,9 @@ def test_get_tutorial_cannot_escape_the_folder():
 
 
 def test_wiki_status(wiki):
-    assert "commands: 4, events: 3" in server.wiki_status()
+    status = server.wiki_status()
+    assert "commands: 4, events: 3" in status
+    assert f"server version: {__version__}" in status
 
 
 @pytest.mark.parametrize(
