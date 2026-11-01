@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1" # weekly, to catch upstream wiki format changes
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: ${{ matrix.os }} / Python ${{ matrix.python }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.10", "3.14"]
+    steps:
+      - uses: actions/checkout@v5
+      - uses: astral-sh/setup-uv@v6
+      - run: uv python install ${{ matrix.python }}
+
+      - name: Unit and end-to-end tests
+        run: uv run --python ${{ matrix.python }} pytest -v
+
+      - name: Real wiki download
+        if: matrix.python == '3.14'
+        run: uv run --python ${{ matrix.python }} pytest -v -m network
+
+      - name: Install the built package with uvx and run it
+        shell: bash
+        run: |
+          uv build
+          uvx --python ${{ matrix.python }} --from dist/*.whl arma3-wiki-mcp --version

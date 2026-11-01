@@ -1,8 +1,8 @@
 # Third-party content
 
-## tutorials/
+## Bundled tutorials
 
-The files in `tutorials/` are derived from the
+The files in `src/arma3_wiki_mcp/tutorials/` are derived from the
 [Bohemia Interactive Community wiki](https://community.bistudio.com/wiki/Main_Page)
 and are the intellectual property of Bohemia Interactive and the wiki's
 contributors. They are included under the wiki's terms
