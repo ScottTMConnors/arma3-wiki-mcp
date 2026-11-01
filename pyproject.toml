@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "arma3-wiki-mcp"
+dynamic = ["version"]
+description = "MCP server that gives AI assistants the Arma 3 scripting wiki: SQF commands, event handlers and tutorials"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "NOTICE.md"]
+requires-python = ">=3.10"
+authors = [{ name = "Scott Connors" }]
+keywords = ["arma3", "sqf", "mcp", "model-context-protocol", "wiki"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Games/Entertainment",
+]
+dependencies = ["mcp>=1.10,<2"]
+
+[project.urls]
+Homepage = "https://github.com/ScottTMConnors/arma3-wiki-mcp"
+Issues = "https://github.com/ScottTMConnors/arma3-wiki-mcp/issues"
+
+[project.scripts]
+arma3-wiki-mcp = "arma3_wiki_mcp.server:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[tool.hatch.version]
+path = "src/arma3_wiki_mcp/__init__.py"
+
+[tool.hatch.build.targets.sdist]
+exclude = ["/wiki", "/.github", "/docs"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["network: downloads the real wiki data from GitHub"]
+addopts = "-m 'not network'"
