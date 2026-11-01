@@ -288,8 +288,8 @@ def get_tutorial(name: str) -> str:
 
 @mcp.tool()
 def wiki_status() -> str:
-    """Data revision, cache location, entry counts and last refresh result."""
-    return (f"data: {DATA}\nupstream: {UPSTREAM} ({BRANCH})\nrevision: {_status['revision']}\n"
+    """Server version, data revision, cache location, entry counts and last refresh result."""
+    return (f"server version: {__version__}\ndata: {DATA}\nupstream: {UPSTREAM} ({BRANCH})\nrevision: {_status['revision']}\n"
             f"last refresh: {_status['last_refresh']}\nlast error: {_status['last_error']}\n"
             f"commands: {len(_index['commands'])}, events: {len(_index['events'])}\n"
             f"refresh interval: {REFRESH_SECONDS / 3600:g} h")

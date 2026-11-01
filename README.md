@@ -25,11 +25,20 @@ is nothing to clone and no venv to set up. MCP clients run one of these commands
 uvx --from git+https://github.com/ScottTMConnors/arma3-wiki-mcp arma3-wiki-mcp
 ```
 
-Or install it once with pipx and run `arma3-wiki-mcp` directly:
+Or install it once and point your client at the `arma3-wiki-mcp` command. Use
+either uv or pipx:
+
+```bash
+uv tool install git+https://github.com/ScottTMConnors/arma3-wiki-mcp
+```
 
 ```bash
 pipx install git+https://github.com/ScottTMConnors/arma3-wiki-mcp
 ```
+
+The `uvx` command checks GitHub for updates every time it starts, so it needs
+GitHub to be reachable. An installed copy starts without internet access, but you
+update it yourself (see [Updating](#updating)).
 
 Internet access is needed on first start to download the wiki data (about 11 MB).
 If [git](https://git-scm.com/) is on your `PATH` the server keeps a shallow git
@@ -74,7 +83,23 @@ args = ["--from", "git+https://github.com/ScottTMConnors/arma3-wiki-mcp", "arma3
 ### Other clients
 
 Any client that supports stdio MCP servers works: run
-`uvx --from git+https://github.com/ScottTMConnors/arma3-wiki-mcp arma3-wiki-mcp`, or `arma3-wiki-mcp` if you installed it with pipx.
+`uvx --from git+https://github.com/ScottTMConnors/arma3-wiki-mcp arma3-wiki-mcp`, or `arma3-wiki-mcp` if you installed it with uv or pipx.
+
+## Updating
+
+There are two kinds of updates, and you only handle the first:
+
+- **Server code** (this repository). How you get it depends on how you installed:
+  - `uvx --from git+...`: nothing to do. It fetches the latest version each time
+    your client starts the server.
+  - `uv tool install`: run `uv tool upgrade arma3-wiki-mcp`.
+  - `pipx install`: run `pipx upgrade arma3-wiki-mcp`.
+
+  Then restart your MCP client so it starts the new version. Run
+  `arma3-wiki-mcp --version` (or ask the assistant to call `wiki_status`) to see
+  which version you have.
+- **Wiki data** (commands, events). Updates itself every 24 hours. To update
+  right away, ask the assistant to call `refresh_wiki`.
 
 ## Tools
 
