@@ -1,7 +1,6 @@
 # arma3-wiki MCP server
 
 [![CI](https://github.com/ScottTMConnors/arma3-wiki-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/ScottTMConnors/arma3-wiki-mcp/actions/workflows/ci.yml)
-[![PyPI](https://img.shields.io/pypi/v/arma3-wiki-mcp)](https://pypi.org/project/arma3-wiki-mcp/)
 
 An MCP (stdio) server that gives AI assistants the Arma 3 scripting wiki: every
 SQF command and event handler from
@@ -23,17 +22,13 @@ You need [uv](https://docs.astral.sh/uv/) or [pipx](https://pipx.pypa.io/). Ther
 is nothing to clone and no venv to set up. MCP clients run one of these commands:
 
 ```bash
-uvx arma3-wiki-mcp
+uvx --from git+https://github.com/ScottTMConnors/arma3-wiki-mcp arma3-wiki-mcp
 ```
 
-```bash
-pipx run arma3-wiki-mcp
-```
-
-Or install it once and run `arma3-wiki-mcp` directly:
+Or install it once with pipx and run `arma3-wiki-mcp` directly:
 
 ```bash
-pipx install arma3-wiki-mcp
+pipx install git+https://github.com/ScottTMConnors/arma3-wiki-mcp
 ```
 
 Internet access is needed on first start to download the wiki data (about 11 MB).
@@ -45,7 +40,7 @@ clone; otherwise it downloads a zip of the branch from GitHub.
 ### Claude Code
 
 ```bash
-claude mcp add arma3-wiki -- uvx arma3-wiki-mcp
+claude mcp add arma3-wiki -- uvx --from git+https://github.com/ScottTMConnors/arma3-wiki-mcp arma3-wiki-mcp
 ```
 
 Or add it to a project's `.mcp.json`:
@@ -55,7 +50,7 @@ Or add it to a project's `.mcp.json`:
   "mcpServers": {
     "arma3-wiki": {
       "command": "uvx",
-      "args": ["arma3-wiki-mcp"]
+      "args": ["--from", "git+https://github.com/ScottTMConnors/arma3-wiki-mcp", "arma3-wiki-mcp"]
     }
   }
 }
@@ -73,13 +68,13 @@ In `~/.codex/config.toml`:
 ```toml
 [mcp_servers.arma3-wiki]
 command = "uvx"
-args = ["arma3-wiki-mcp"]
+args = ["--from", "git+https://github.com/ScottTMConnors/arma3-wiki-mcp", "arma3-wiki-mcp"]
 ```
 
 ### Other clients
 
-Any client that supports stdio MCP servers works: run `uvx arma3-wiki-mcp`,
-`pipx run arma3-wiki-mcp`, or `arma3-wiki-mcp` if you installed it with pipx.
+Any client that supports stdio MCP servers works: run
+`uvx --from git+https://github.com/ScottTMConnors/arma3-wiki-mcp arma3-wiki-mcp`, or `arma3-wiki-mcp` if you installed it with pipx.
 
 ## Tools
 
@@ -124,9 +119,6 @@ uv run pytest -m network   # also downloads the real wiki data
 
 To regenerate the demo GIF: `uv run --with pillow docs/demo/render_demo.py`.
 It runs the tool calls for real against the server and renders their results.
-
-To release, bump `__version__` in `src/arma3_wiki_mcp/__init__.py` and push a
-matching tag (`v0.1.0`); the Release workflow publishes it to PyPI.
 
 ## License
 
